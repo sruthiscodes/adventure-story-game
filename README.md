@@ -2,7 +2,6 @@
 
 A multimodal full-stack interactive fantasy adventure game that generates dynamic, branching narratives using AI. Built with React & TypeScript on the frontend and FastAPI on the backend, this project allows users to embark on personalized storytelling journeys, where their choices shape the adventure. Additionally, the game includes AI-driven image generation, creating visuals to match key moments in the story, providing both text and visual elements for an enriched, immersive experience.
 
----
 
 ## Tech Stack
 - React 19 (TypeScript)
@@ -11,9 +10,6 @@ A multimodal full-stack interactive fantasy adventure game that generates dynami
 - Image generation via Replicate (Flux: `black-forest-labs/flux-schnell`)
 - RAG using Sentence-Transformers (`all-MiniLM-L6-v2`), and ChromaDB
 
----
-
-
 
 ## Prerequisites
 
@@ -21,7 +17,6 @@ A multimodal full-stack interactive fantasy adventure game that generates dynami
 - **Python** 3.8+ & **pip**  
 - (Optional) **CUDA** for llama-cpp GPU acceleration  
 
----
 
 ## Getting Started
 
@@ -54,6 +49,4 @@ npm start
 ```
 
 The web app is hosted on `http://localhost:3000`
----
-
 
