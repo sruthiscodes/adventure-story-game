@@ -13,14 +13,14 @@ A multimodal full-stack interactive fantasy adventure game that generates dynami
 
 ## Prerequisites
 
-- **Node.js** & **npm**  
-- **Python** & **pip**  
+- **Node.js** v14+ & **npm**  
+- **Python** 3.8+ & **pip**  
 - (Optional) **CUDA** for llama-cpp GPU acceleration  
 
 
 ## Getting started
 
-## Set environment variables
+### Set environment variables
 First, set your environment variables for Replicate and HuggingFace API tokens:
 
 ```bash
