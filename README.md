@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# AI Storyteller – Interactive Fantasy Adventure Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack application with a React & TypeScript frontend and FastAPI backend that dynamically generates branching fantasy stories using AI, complete with on-the-fly image creation.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Before you begin, ensure you have:
 
-### `npm start`
+•  **Node.js** v14+  
+•  **npm** (comes with Node.js)  
+•  **Python** 3.8+  
+•  **pip** (comes with Python)  
+•  (Optional) **CUDA** setup if you plan to run local Llama models on GPU  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project Setup
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 1. Backend (FastAPI)
 
-### `npm test`
+```bash
+# 1. Enter the server folder
+cd server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 2. (Recommended) Create & activate a virtual env
+python3 -m venv .venv
+source .venv/bin/activate
 
-### `npm run build`
+# 3. Install dependencies
+pip install -r requirements.txt
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 4. (Optional) Download a local Llama GGUF model
+python download_model.py
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 5. Start the backend server
+uvicorn app:app --host 0.0.0.0 --port 5000 --reload
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The backend will be available at `http://localhost:5000`.
 
-### `npm run eject`
+### 2. Frontend (React)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+In a separate terminal:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# 1. From project root
+cd .
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# 2. Install Node dependencies
+npm install
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# 3. Start the development server
+npm start
+```
 
-## Learn More
+Your React app will launch at `http://localhost:3000` and proxy API requests to the FastAPI backend.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **New Game**  
+   - Click **“New Adventure”** on the welcome screen.  
+   - Fill in your character’s name and background.
+
+2. **Gameplay**  
+   - Make choices as the narrative unfolds.  
+   - Watch your character stats update and the story branch in real time.
+
+3. **Image Generation**  
+   - Each story segment may generate an AI-produced image.  
+   - Images are stored in the server’s `generated_images/` folder.
+
+4. **Emergency Controls**  
+   - “Reset Game” clears all saved state.  
+   - “Fix Game Flow” jumps you back to character creation.
+
+## Environment Variables
+
+- **REPLICATE_API_TOKEN**  
+  For image generation via Replicate.
+- **LLAMA_MODEL_PATH**  
+  Path to your local GGUF model if using llama-cpp.
+- **LLAMA_N_GPU_LAYERS**  
+  Number of layers to offload to GPU (default: 0 for CPU).
+
+Example (macOS/Linux):
+
+```bash
+export REPLICATE_API_TOKEN="your_token_here"
+export LLAMA_MODEL_PATH="server/models/your_model.gguf"
+export LLAMA_N_GPU_LAYERS=32
+```

@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="AI Storyteller - An Interactive Adventure Game"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
@@ -24,10 +24,71 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>AI Storyteller</title>
+    <style>
+      #emergency-reset {
+        position: fixed;
+        top: 5px;
+        right: 5px;
+        z-index: 9999;
+        background: rgba(0,0,0,0.7);
+        border: 1px solid #ff6b6b;
+        color: #ff6b6b;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+      #emergency-reset:hover {
+        background: rgba(0,0,0,0.9);
+      }
+      
+      #emergency-buttons {
+        position: fixed;
+        top: 5px;
+        right: 5px;
+        z-index: 9999;
+        display: flex;
+        gap: 5px;
+      }
+      
+      .emergency-button {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid #ff6b6b;
+        color: #ff6b6b;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+      
+      .emergency-button:hover {
+        background: rgba(0,0,0,0.9);
+      }
+      
+      #game-flow-mode {
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+        font-size: 10px;
+        color: rgba(255,255,255,0.5);
+        background: rgba(0,0,0,0.6);
+        padding: 3px 6px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <div id="emergency-buttons">
+      <button class="emergency-button" onclick="resetGame()">Reset Game</button>
+      <button class="emergency-button" onclick="fixGameFlow()">Fix Game Flow</button>
+    </div>
+    
+    <div id="game-flow-mode" onclick="toggleMultiPage()">Single-Page Mode</div>
+    
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -39,5 +100,44 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      // Reset everything and start fresh
+      function resetGame() {
+        localStorage.clear();
+        window.location.href = window.location.pathname + '?reset=true';
+      }
+      
+      // Fix game flow by forcing character creation
+      function fixGameFlow() {
+        localStorage.clear();
+        sessionStorage.setItem('fix-game-flow', 'character-creation');
+        window.location.reload();
+      }
+      
+      // Toggle between single-page and multi-page modes
+      function toggleMultiPage() {
+        const currentMode = localStorage.getItem('game-mode') || 'single-page';
+        const newMode = currentMode === 'single-page' ? 'multi-page' : 'single-page';
+        
+        localStorage.setItem('game-mode', newMode);
+        
+        const modeButton = document.getElementById('game-flow-mode');
+        if (modeButton) {
+          modeButton.textContent = newMode === 'single-page' ? 'Single-Page Mode' : 'Multi-Page Mode';
+        }
+        
+        // Force a reload to apply the new mode
+        window.location.reload();
+      }
+      
+      // Initialize the mode indicator
+      window.onload = function() {
+        const currentMode = localStorage.getItem('game-mode') || 'single-page';
+        const modeButton = document.getElementById('game-flow-mode');
+        if (modeButton) {
+          modeButton.textContent = currentMode === 'single-page' ? 'Single-Page Mode' : 'Multi-Page Mode';
+        }
+      };
+    </script>
   </body>
 </html>
